@@ -5,12 +5,20 @@ phases:
     runtime-versions:
       nodejs: 20
     commands:
-      - echo Installing dependencies...
+      - echo "🚀 Installing dependencies..."
       - npm install
+
   build:
     commands:
-      - echo Building React app...
+      - echo "🏗️ Building React app..."
       - npm run build
+
+  post_build:
+    commands:
+      - echo "✅ Build completed successfully!"
+      - echo "🧹 Starting CloudFront cache invalidation..."
+      - aws cloudfront create-invalidation --distribution-id EEEZ0MBZHJXXX --paths "/*"
+
 artifacts:
   files:
     - '**/*'
